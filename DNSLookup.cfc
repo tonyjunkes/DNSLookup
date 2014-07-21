@@ -3,7 +3,7 @@
 * The "lookup" functions cover DNS types listed at
 * http://en.wikipedia.org/wiki/List_of_DNS_record_types.
 * Formatting of data has been applied to known outputs that could be tested.
-* Some arrays may contain a string of multiple values.
+* Some arrays may contain a string of multiple values that need to be parsed.
 * @author Tony Junkes - @cfchef
 * @version 1.0
 */
