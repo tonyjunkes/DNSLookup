@@ -228,8 +228,7 @@ component name="DNSLookup"
     {
         var records = getAttributeByType(dnsType = "NS");
         var results = [];
-        var hostName = record = "";
-        var preferenceValue = 0;
+        var record = "";
 
         //remove any trailing periods from NS records.
         for (record in records) {
