@@ -5,17 +5,17 @@
 * Formatting of data has been applied to known outputs that could be tested.
 * Some arrays may contain a string of multiple values that need to be parsed.
 * @author Tony Junkes - @cfchef
-* @version 1.0
+* @version 1.1
 */
 component name="DNSLookup"
     output="false"
 {
     /**
-    * @hint Initialize the object.
+    * @hint Initialize the DNSLookup object.
     * @param domainName The domain to lookup records from. (required)
-    * @return Returns a object for further processing.
+    * @return Returns a DNSLookup object for further processing.
     */
-    public any function init(required string domainName = "")
+    public DNSLookup function init(required string domainName = "")
         output="false"
     {
         VARIABLES.domain = ARGUMENTS.domainName;
@@ -23,8 +23,7 @@ component name="DNSLookup"
         return THIS;
     }
     /**
-    * @hint Returns A record values.
-    * @return Returns an array of A records.
+    * @hint Returns a array of A record values.
     */
     public array function lookupA()
         output="false"
@@ -32,8 +31,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "A");
     }
     /**
-    * @hint Returns AAAA record values.
-    * @return Returns an array of AAAA records.
+    * @hint Returns a array of AAAA record values.
     */
     public array function lookupAAAA()
         output="false"
@@ -41,8 +39,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "AAAA");
     }
     /**
-    * @hint Returns AFSDB record values.
-    * @return Returns an array of AFSDB records.
+    * @hint a array of Returns AFSDB record values.
     */
     public array function lookupAFSDB()
         output="false"
@@ -50,8 +47,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "AFSDB");
     }
     /**
-    * @hint Returns APL record values.
-    * @return Returns an array of APL records.
+    * @hint Returns a array of APL record values.
     */
     public array function lookupAPL()
         output="false"
@@ -59,8 +55,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "APL");
     }
     /**
-    * @hint Returns CAA record values.
-    * @return Returns an array of CAA records.
+    * @hint Returns a array of CAA record values.
     */
     public array function lookupCAA()
         output="false"
@@ -68,8 +63,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "CAA");
     }
     /**
-    * @hint Returns CERT record values.
-    * @return Returns an array of CERT records.
+    * @hint Returns a array of CERT record values.
     */
     public array function lookupCERT()
         output="false"
@@ -77,8 +71,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "CERT");
     }
     /**
-    * @hint Returns CNAME record values.
-    * @return Returns an array of CNAME records.
+    * @hint Returns a array of CNAME record values.
     */
     public array function lookupCNAME()
         output="false"
@@ -86,8 +79,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "CNAME");
     }
     /**
-    * @hint Returns DHCID record values.
-    * @return Returns an array of DHCID records.
+    * @hint Returns a array of DHCID record values.
     */
     public array function lookupDHCID()
         output="false"
@@ -95,8 +87,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "DHCID");
     }
     /**
-    * @hint Returns DLV record values.
-    * @return Returns an array of DLV records.
+    * @hint Returns a array of DLV record values.
     */
     public array function lookupDLV()
         output="false"
@@ -104,8 +95,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "DLV");
     }
     /**
-    * @hint Returns DNAME record values.
-    * @return Returns an array of DNAME records.
+    * @hint Returns a array of DNAME record values.
     */
     public array function lookupDNAME()
         output="false"
@@ -113,8 +103,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "DNAME");
     }
     /**
-    * @hint Returns DNSKEY record values.
-    * @return Returns an array of DNSKEY records.
+    * @hint Returns a array of DNSKEY record values.
     */
     public array function lookupDNSKEY()
         output="false"
@@ -122,8 +111,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "DNSKEY");
     }
     /**
-    * @hint Returns DS record values.
-    * @return Returns an array of DS records.
+    * @hint Returns a array of DS record values.
     */
     public array function lookupDS()
         output="false"
@@ -131,8 +119,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "DS");
     }
     /**
-    * @hint Returns HIP record values.
-    * @return Returns an array of HIP records.
+    * @hint Returns a array of HIP record values.
     */
     public array function lookupHIP()
         output="false"
@@ -140,8 +127,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "HIP");
     }
     /**
-    * @hint Returns IPSECKEY record values.
-    * @return Returns an array of IPSECKEY records.
+    * @hint Returns a array of IPSECKEY record values.
     */
     public array function lookupIPSECKEY()
         output="false"
@@ -149,8 +135,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "IPSECKEY");
     }
     /**
-    * @hint Returns KEY record values.
-    * @return Returns an array of KEY records.
+    * @hint Returns a array of KEY record values.
     */
     public array function lookupKEY()
         output="false"
@@ -158,8 +143,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "KEY");
     }
     /**
-    * @hint Returns KX record values.
-    * @return Returns an array of KX records.
+    * @hint Returns a array of KX record values.
     */
     public array function lookupKX()
         output="false"
@@ -167,8 +151,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "KX");
     }
     /**
-    * @hint Returns LOC record values.
-    * @return Returns an array of LOC records.
+    * @hint Returns a array of LOC record values.
     */
     public array function lookupLOC()
         output="false"
@@ -176,9 +159,8 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "LOC");
     }
     /**
-    * @hint Returns a array of MX record values
+    * @hint Returns a array of structs containing MX record values
     * sorted from most preferred to least preferred.
-    * @return Returns an array of structs containing host info (if any).
     */
     public array function lookupMX()
         output="false"
@@ -187,14 +169,13 @@ component name="DNSLookup"
         //see: RFC 1034 - Domain names - concepts and facilities.
         //see: http://java.sun.com/j2se/1.5.0/docs/guide/jndi/jndi-dns.html -
         //DNS Service Provider for the Java Naming Directory Interface (JNDI).
-        var records = pvhnSplit = results = [];
+        var records = getAttributeByType(dnsType = "MX");
+        var pvhnSplit = results = [];
         var hostName = record = "";
         var preferenceValue = 0;
 
-        //Get DNS type records.
-        records = getAttributeByType(dnsType = "MX");
         //Split MX RRs into Preference Values(pvhnSplit[1]) and Host Names(pvhnSplit[2]),
-        //remove any trailing periods from Host Names and assign to an array of
+        //remove any trailing periods from Host Names and assign to a array of
         //structs containing the split values.
         for (record in records) {
             pvhnSplit = listToArray(record, " ");
@@ -211,8 +192,7 @@ component name="DNSLookup"
         return results;
     }
     /**
-    * @hint Returns NAPTR record values.
-    * @return Returns an array of NAPTR records.
+    * @hint Returns a array of NAPTR record values.
     */
     public array function lookupNAPTR()
         output="false"
@@ -220,8 +200,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "NAPTR");
     }
     /**
-    * @hint Returns NS record values.
-    * @return Returns an array of NS records.
+    * @hint Returns a array of NS record values.
     */
     public array function lookupNS()
         output="false"
@@ -243,8 +222,7 @@ component name="DNSLookup"
         return results;
     }
     /**
-    * @hint Returns NSEC record values.
-    * @return Returns an array of NSEC records.
+    * @hint Returns a array of NSEC record values.
     */
     public array function lookupNSEC()
         output="false"
@@ -252,8 +230,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "NSEC");
     }
     /**
-    * @hint Returns NSEC3 record values.
-    * @return Returns an array of NSEC3 records.
+    * @hint Returns a array of NSEC3 record values.
     */
     public array function lookupNSEC3()
         output="false"
@@ -261,8 +238,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "NSEC3");
     }
     /**
-    * @hint Returns NSEC3PARAM record values.
-    * @return Returns an array of NSEC3PARAM records.
+    * @hint Returns a array of NSEC3PARAM record values.
     */
     public array function lookupNSEC3PARAM()
         output="false"
@@ -270,8 +246,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "NSEC3PARAM");
     }
     /**
-    * @hint Returns PTR record values.
-    * @return Returns an array of PTR records.
+    * @hint Returns a array of PTR record values.
     */
     public array function lookupPTR()
         output="false"
@@ -279,8 +254,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "PTR");
     }
     /**
-    * @hint Returns RRSIG record values.
-    * @return Returns an array of RRSIG records.
+    * @hint Returns a array of RRSIG record values.
     */
     public array function lookupRRSIG()
         output="false"
@@ -288,8 +262,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "RRSIG");
     }
     /**
-    * @hint Returns RP record values.
-    * @return Returns an array of RP records.
+    * @hint Returns a array of RP record values.
     */
     public array function lookupRP()
         output="false"
@@ -297,8 +270,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "RP");
     }
     /**
-    * @hint Returns SIG record values.
-    * @return Returns an array of SIG records.
+    * @hint Returns a array of SIG record values.
     */
     public array function lookupSIG()
         output="false"
@@ -306,20 +278,18 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "SIG");
     }
     /**
-    * @hint Returns SOA record values.
-    * @return Returns an array of structs containing SOA record values.
+    * @hint Returns a array of structs containing SOA record values.
     */
     public array function lookupSOA()
         output="false"
     {
-        var records = zoneSplit = results = timers = [];
+        var records = getAttributeByType(dnsType = "SOA");
+        var zoneSplit = results = timers = [];
         var primaryNS = email = record = "";
         var domainSerial = 0;
 
-        //Get DNS type records.
-        records = getAttributeByType(dnsType = "SOA");
         //Split SOA records into specified keys and values,
-        //remove any trailing periods from Host/Domain Names and assign to an array of
+        //remove any trailing periods from Host/Domain Names and assign to a array of
         //structs containing the split values.
         for (record in records) {
             zoneSplit = listToArray(record, " ");
@@ -342,8 +312,7 @@ component name="DNSLookup"
         return results;
     }
     /**
-    * @hint Returns SPF record values.
-    * @return Returns an array of SPF records.
+    * @hint Returns a array of SPF record values.
     */
     public array function lookupSPF()
         output="false"
@@ -351,8 +320,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "SPF");
     }
     /**
-    * @hint Returns SRV record values.
-    * @return Returns an array of SRV records.
+    * @hint Returns a array of SRV record values.
     */
     public array function lookupSRV()
         output="false"
@@ -360,8 +328,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "SRV");
     }
     /**
-    * @hint Returns SSHFP record values.
-    * @return Returns an array of SSHFP records.
+    * @hint Returns a array of SSHFP record values.
     */
     public array function lookupSSHFP()
         output="false"
@@ -369,8 +336,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "SSHFP");
     }
     /**
-    * @hint Returns TA record values.
-    * @return Returns an array of TA records.
+    * @hint Returns a array of TA record values.
     */
     public array function lookupTA()
         output="false"
@@ -378,8 +344,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "TA");
     }
     /**
-    * @hint Returns TKEY record values.
-    * @return Returns an array of TKEY records.
+    * @hint Returns a array of TKEY record values.
     */
     public array function lookupTKEY()
         output="false"
@@ -387,8 +352,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "TKEY");
     }
     /**
-    * @hint Returns TLSA record values.
-    * @return Returns an array of TLSA records.
+    * @hint Returns a array of TLSA record values.
     */
     public array function lookupTLSA()
         output="false"
@@ -396,8 +360,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "TLSA");
     }
     /**
-    * @hint Returns TSIG record values.
-    * @return Returns an array of TSIG records.
+    * @hint Returns a array of TSIG record values.
     */
     public array function lookupTSIG()
         output="false"
@@ -405,8 +368,7 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "TSIG");
     }
     /**
-    * @hint Returns TXT record values.
-    * @return Returns an array of TXT records.
+    * @hint Returns a array of TXT record values.
     */
     public array function lookupTXT()
         output="false"
@@ -414,20 +376,18 @@ component name="DNSLookup"
         return getAttributeByType(dnsType = "TXT");
     }
     /**
-    * @hint Returns a BasicAttribute object of DNS types and values.
-    * @return Returns a javax.naming.directory.BasicAttribute object of attributes.
+    * @hint Returns a javax.naming.directory.BasicAttribute object of DNS types.
     */
-    private function getAttributes()
+    public any function getAttributes()
         output="false"
     {
-        var jInitDirCtx = createObject("java", "javax.naming.directory.InitialDirContext");
-
-        return jInitDirCtx.getAttributes("dns:/" & VARIABLES.domain, javaCast("null", ""));
+        return createObject(
+            "java", "javax.naming.directory.InitialDirContext"
+        ).getAttributes("dns:/" & VARIABLES.domain, javaCast("null", ""));
     }
     /**
     * @hint Returns a array of values from a given DNS type.
     * @param dnsType (required)
-    * @return Returns a array of attribute values.
     */
     private array function getAttributeByType(required string dnsType = "")
         output="false"
@@ -435,10 +395,10 @@ component name="DNSLookup"
         var i = 0;
         var records = [];
         //Get the records from the default DNS directory service provider.
-        var attribute = getAttributes().get(dnsType);
+        var attribute = getAttributes().get(ARGUMENTS.dnsType);
 
         if (isDefined("attribute")) {
-            //Create an array of records and sort them.
+            //Create a array of records and sort them.
             for (i = 0; i < attribute.size(); i++) {
                 arrayAppend(records, attribute.get(i));
             }
