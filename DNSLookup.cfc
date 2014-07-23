@@ -383,7 +383,7 @@ component name="DNSLookup"
             for (i = 0; i < attribute.size(); i++) {
                 arrayAppend(records, attribute.get(i));
             }
-            arraySort(records, "text", "asc");
+            arraySort(records, "textnocase", "asc");
         } else {
             //If there are no records then default to domainName (see: RFC 974).
             arrayAppend(records, VARIABLES.domain);
