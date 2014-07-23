@@ -181,11 +181,7 @@ component name="DNSLookup"
             pvhnSplit = listToArray(record, " ");
             arrayAppend(results, {
                 "preferenceValue" = pvhnSplit[1],
-                "hostName" = (
-                    pvhnSplit[2].endsWith(".")
-                    ? pvhnSplit[2].substring(0, pvhnSplit[2].length() - 1)
-                    : pvhnSplit[2]
-                )
+                "hostName" = reReplace(pvhnSplit[2], "\.$", "", "ALL")
             });
         }
 
@@ -211,12 +207,7 @@ component name="DNSLookup"
 
         //remove any trailing periods from NS records.
         for (record in records) {
-            arrayAppend(results, (
-                    record.endsWith(".")
-                    ? record.substring(0, record.length() - 1)
-                    : record
-                )
-            );
+            arrayAppend(results, reReplace(record, "\.$", "", "ALL"));
         }
 
         return results;
@@ -294,16 +285,8 @@ component name="DNSLookup"
         for (record in records) {
             zoneSplit = listToArray(record, " ");
             arrayAppend(results, {
-                "primaryNS" = (
-                    zoneSplit[1].endsWith(".")
-                    ? zoneSplit[1].substring(0, zoneSplit[1].length() - 1)
-                    : zoneSplit[1]
-                ),
-                "email" = (
-                    zoneSplit[2].endsWith(".")
-                    ? zoneSplit[2].substring(0, zoneSplit[2].length() - 1)
-                    : zoneSplit[2]
-                ),
+                "primaryNS" = reReplace(zoneSplit[1], "\.$", "", "ALL"),
+                "email" = reReplace(zoneSplit[2], "\.$", "", "ALL"),
                 "domainSerial" = zoneSplit[3],
                 "timers" = [zoneSplit[4], zoneSplit[5], zoneSplit[6], zoneSplit[7]]
             });
