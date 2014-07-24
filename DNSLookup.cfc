@@ -47,7 +47,7 @@ component name="DNSLookup"
             } else {
                 //If there are no records then default to domain name.
                 arrayAppend(records, VARIABLES.domain);
-                results = {"#type#" = records};
+                results[type] = records;
             }
         }
 
