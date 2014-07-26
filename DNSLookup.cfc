@@ -3,23 +3,23 @@
 * A list of DNS record types can be found at -
 * http://en.wikipedia.org/wiki/List_of_DNS_record_types.
 * @author Tony Junkes - @cfchef
-* @version 1.2
+* @version 1.3
 */
 component name="DNSLookup"
     output="false"
 {
     /**
-    * @hint Initialize the DNSLookup object.
-    * @param domainName The domain to lookup records from. (required)
-    * @return Returns a DNSLookup object for further processing.
+    * @hint Initialize the DNSLookup object and set the domain for further processing.
+    * @param domain The Domain Name or IP Address to lookup records from. (required)
     */
-    public DNSLookup function init(required string domainName = "")
+    public DNSLookup function init(required string domain = "")
         output="false"
     {
-        VARIABLES.domain = ARGUMENTS.domainName;
+        VARIABLES.domain = ARGUMENTS.domain;
 
         return THIS;
     }
+
     /**
     * @hint Returns a struct of key/values from a given DNS type.
     * @param dnsType (required)
@@ -36,7 +36,6 @@ component name="DNSLookup"
         var results = {};
 
         for (type in listToArray(ARGUMENTS.dnsTypes, ",")) {
-            arrayClear(records);
             attribute = attributes.get(type);
             if (isDefined("attribute")) {
                 for (i = 0; i < attribute.size(); i++) {
@@ -49,6 +48,7 @@ component name="DNSLookup"
                 arrayAppend(records, VARIABLES.domain);
                 results[type] = records;
             }
+            arrayClear(records);
         }
 
         return results;
@@ -60,7 +60,8 @@ component name="DNSLookup"
 
     /**
     * @hint Returns a array of structs containing MX record values
-    * sorted from most preferred to least preferred.
+    * sorted from most preferred to least preferred. If any records are
+    * not fomatted properly, an empty struct will be returned.
     * @param records (required)
     */
     public array function parseMX(required array records)
@@ -78,11 +79,19 @@ component name="DNSLookup"
         //remove any trailing periods from Host Names and assign to a array of
         //structs containing the split values.
         for (record in ARGUMENTS.records) {
-            pvhnSplit = listToArray(record, " ");
-            arrayAppend(results, {
-                "preferenceValue" = pvhnSplit[1],
-                "hostName" = reReplace(pvhnSplit[2], "\.$", "", "ALL")
-            });
+            try {
+                pvhnSplit = listToArray(record, " ");
+                arrayAppend(results, {
+                    "preferenceValue" = pvhnSplit[1],
+                    "hostName" = reReplace(pvhnSplit[2], "\.$", "", "ALL")
+                });
+            }
+            catch(any e) {
+                arrayAppend(results, {
+                    "preferenceValue" = 0,
+                    "hostName" = ""
+                });
+            }
         }
 
         return results;
@@ -104,15 +113,18 @@ component name="DNSLookup"
 
         return results;
     }
+
     /**
-    * @hint Returns a struct containing SOA record values.
+    * @hint Returns a array containing a struct of SOA record values.
     * As per RFC 1035 there should only be one record, though
     * some googling suggests multiple are possible.
-    * Results will be assumed as a struct but return a array of
-    * structs should there be multiple records.
+    * Results will follow a safety approach and return a array(s)
+    * containing a struct of results.
+    * If any records are not fomatted properly,
+    * a empty struct will be returned.
     * @param records (required)
     */
-    public any function parseSOA(required array records)
+    public array function parseSOA(required array records)
         output="false"
     {
         var zoneSplit = timers = [];
@@ -123,7 +135,7 @@ component name="DNSLookup"
         //remove any trailing periods from Host/Domain Names and assign to a struct.
         for (record in ARGUMENTS.records) {
             zoneSplit = listToArray(record, " ");
-            if (arrayLen(ARGUMENTS.records) > 1) {
+            try {
                 results = [];
                 arrayAppend(results, {
                     "primaryNS" = reReplace(zoneSplit[1], "\.$", "", "ALL"),
@@ -131,13 +143,12 @@ component name="DNSLookup"
                     "domainSerial" = zoneSplit[3],
                     "timers" = [zoneSplit[4], zoneSplit[5], zoneSplit[6], zoneSplit[7]]
                 });
-            } else {
-                results = {
-                    "primaryNS" = reReplace(zoneSplit[1], "\.$", "", "ALL"),
-                    "email" = reReplace(zoneSplit[2], "\.$", "", "ALL"),
-                    "domainSerial" = zoneSplit[3],
-                    "timers" = [zoneSplit[4], zoneSplit[5], zoneSplit[6], zoneSplit[7]]
-                };
+            }
+            catch(any e) {
+                arrayAppend(results, {
+                    "primaryNS" = "", "email" = "",
+                    "domainSerial" = 0, "timers" = [0, 0, 0, 0]
+                });
             }
         }
 
