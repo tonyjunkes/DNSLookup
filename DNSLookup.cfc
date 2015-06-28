@@ -3,7 +3,7 @@
 * A list of DNS record types can be found at -
 * http://en.wikipedia.org/wiki/List_of_DNS_record_types.
 * @author Tony Junkes - @cfchef
-* @version 1.3
+* @version 1.4
 */
 component name="DNSLookup"
     output="false"
@@ -12,40 +12,33 @@ component name="DNSLookup"
     * @hint Initialize the DNSLookup object and set the domain for further processing.
     * @param domain The Domain Name or IP Address to lookup records from. (required)
     */
-    public DNSLookup function init(required string domain = "")
-        output="false"
-    {
-        VARIABLES.domain = ARGUMENTS.domain;
+    public DNSLookup function init(required string domain) {
+        variables.domain = arguments.domain;
 
-        return THIS;
+        return this;
     }
 
     /**
     * @hint Returns a struct of key/values from a given DNS type.
     * @param dnsType (required)
     */
-    public struct function getDNSRecord(required string dnsTypes = "")
-        output="false"
-    {
+    public struct function getDNSRecord(required string dnsTypes) {
         var attributes = createObject(
             "java", "javax.naming.directory.InitialDirContext"
-        ).getAttributes("dns:/" & VARIABLES.domain, javaCast("null", ""));
-        var type = "";
-        var records = attribute = [];
-        var i = 0;
+        ).getAttributes("dns:/" & variables.domain, javaCast("null", ""));
+        var records = [];
         var results = {};
-
-        for (type in listToArray(ARGUMENTS.dnsTypes, ",")) {
-            attribute = attributes.get(type);
+        for (var type in listToArray(arguments.dnsTypes, ",")) {
+            var attribute = attributes.get(type);
             if (isDefined("attribute")) {
-                for (i = 0; i < attribute.size(); i++) {
+                for (var i = 0; i < attribute.size(); i++) {
                     arrayAppend(records, attribute.get(i));
                 }
                 arraySort(records, "textnocase", "asc");
-                structAppend(results, {"#type#" = records});
+                results[type] = records;
             } else {
                 //If there are no records then default to domain name.
-                arrayAppend(records, VARIABLES.domain);
+                arrayAppend(records, variables.domain);
                 results[type] = records;
             }
             arrayClear(records);
@@ -64,33 +57,26 @@ component name="DNSLookup"
     * not fomatted properly, an empty struct will be returned.
     * @param records (required)
     */
-    public array function parseMX(required array records)
-        output="false"
-    {
+    public array function parseMX(required array records) {
         //see: RFC 974 - Mail routing and the domain system.
         //see: RFC 1034 - Domain names - concepts and facilities.
         //see: http://java.sun.com/j2se/1.5.0/docs/guide/jndi/jndi-dns.html -
         //DNS Service Provider for the Java Naming Directory Interface (JNDI).
-        var pvhnSplit = results = [];
-        var hostName = record = "";
-        var preferenceValue = 0;
 
         //Split MX RRs into Preference Values(pvhnSplit[1]) and Host Names(pvhnSplit[2]),
         //remove any trailing periods from Host Names and assign to a array of
         //structs containing the split values.
-        for (record in ARGUMENTS.records) {
+        var results = [];
+        for (var record in arguments.records) {
             try {
-                pvhnSplit = listToArray(record, " ");
+                var pvhnSplit = listToArray(record, " ");
                 arrayAppend(results, {
                     "preferenceValue" = pvhnSplit[1],
                     "hostName" = reReplace(pvhnSplit[2], "\.$", "", "ALL")
                 });
             }
             catch(any e) {
-                arrayAppend(results, {
-                    "preferenceValue" = 0,
-                    "hostName" = ""
-                });
+                arrayAppend(results, {"preferenceValue" = 0, "hostName" = ""});
             }
         }
 
@@ -100,14 +86,10 @@ component name="DNSLookup"
     * @hint Returns a array of NS record values.
     * @param records (required)
     */
-    public array function parseNS(required array records)
-        output="false"
-    {
+    public array function parseNS(required array records) {
         var results = [];
-        var record = "";
-
         //remove any trailing periods from NS records.
-        for (record in ARGUMENTS.records) {
+        for (var record in arguments.records) {
             arrayAppend(results, reReplace(record, "\.$", "", "ALL"));
         }
 
@@ -124,19 +106,13 @@ component name="DNSLookup"
     * a empty struct will be returned.
     * @param records (required)
     */
-    public array function parseSOA(required array records)
-        output="false"
-    {
-        var zoneSplit = timers = [];
-        var results = primaryNS = email = record = "";
-        var domainSerial = 0;
-
+    public array function parseSOA(required array records) {
         //Split SOA record into specified keys and values,
         //remove any trailing periods from Host/Domain Names and assign to a struct.
-        for (record in ARGUMENTS.records) {
-            zoneSplit = listToArray(record, " ");
+        var results = [];
+        for (var record in arguments.records) {
+            var zoneSplit = listToArray(record, " ");
             try {
-                results = [];
                 arrayAppend(results, {
                     "primaryNS" = reReplace(zoneSplit[1], "\.$", "", "ALL"),
                     "email" = reReplace(zoneSplit[2], "\.$", "", "ALL"),
@@ -145,10 +121,7 @@ component name="DNSLookup"
                 });
             }
             catch(any e) {
-                arrayAppend(results, {
-                    "primaryNS" = "", "email" = "",
-                    "domainSerial" = 0, "timers" = [0, 0, 0, 0]
-                });
+                arrayAppend(results, {"primaryNS" = "", "email" = "", "domainSerial" = 0, "timers" = [0, 0, 0, 0]});
             }
         }
 
