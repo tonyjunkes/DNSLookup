@@ -82,6 +82,7 @@ component name="DNSLookup"
 
         return results;
     }
+    
     /**
     * @hint Returns a array of NS record values.
     * @param records (required)
